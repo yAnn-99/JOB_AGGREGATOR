@@ -10,10 +10,6 @@ app.get('/', (req : Request, res : Response) => {
   res.send('Hello World!');
 });
 
-app.get('/hello' , (req : Request , res: Response) => {
-  res.send('cookie');
-});
-
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
