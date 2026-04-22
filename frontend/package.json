@@ -1,0 +1,16 @@
+{
+  "name": "job-aggregator-frontend",
+  "version": "1.0.0",
+  "scripts": {
+    "lint:html": "htmlhint 'src/**/*.html' 'public/index.html'",
+    "lint:css": "stylelint 'src/css/**/*.css'",
+    "lint:js": "eslint 'src/js/**/*.js'",
+    "lint": "npm run lint:html && npm run lint:css && npm run lint:js"
+  },
+  "devDependencies": {
+    "htmlhint": "^1.1.4",
+    "stylelint": "^16.0.0",
+    "eslint": "^8.0.0",
+    "axe-cli": "^4.8.0"
+  }
+}
