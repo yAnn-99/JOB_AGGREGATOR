@@ -1,7 +1,7 @@
 FROM python
 
-WORKDIR usr/share/app
+WORKDIR /app
 
-COPY . . 
+COPY . .
 
-CMD ["python" , "data/src/hello.py"]
+CMD ["python" , "hello.py"]

@@ -1,23 +1,27 @@
 services : 
   front : 
     build : 
-      dockerfile : ./frontend/Dockerfile
+      context : ./frontend
+      dockerfile : ./Dockerfile
     ports : 
-      - "8080:8080"
+      - "8080:80"
 
   back : 
     build :
+      # context: ./backend
       dockerfile : ./backend/Dockerfile
     ports : 
       - "3000:3000"
   
   data : 
     build:
-      dockerfile : ./data/Dockerfile
+      context : ./data
+      dockerfile : ./Dockerfile
 
   db : 
-    build : 
-      dockerfile : ./backend/database/Dockerfile
+    build :
+      context : ./backend/database
+      dockerfile : ./Dockerfile
     environment:
       MYSQL_ROOT_PASSWORD: example
     
