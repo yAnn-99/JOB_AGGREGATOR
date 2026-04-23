@@ -1,4 +1,8 @@
-import { temp_db } from "../main";
+import { PassThrough } from 'node:stream';
+import { temp_db } from '../main';
+import bcrypt from 'bcryptjs';
 
 
-console.log(temp_db)
+function MakeToken() {;
+    const infos = temp_db;
+}
