@@ -7,6 +7,6 @@ import jwt from 'jsonwebtoken';
 export function MakeToken(payload) {
     const secret = process.env.SECRET;
 
-    const token = jwt.sign(payload.email, secret);
+    const token = jwt.sign({email : payload.email}, secret);
     return token
 }
