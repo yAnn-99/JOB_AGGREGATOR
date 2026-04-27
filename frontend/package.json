@@ -1,16 +1,26 @@
 {
-  "name": "job-aggregator-frontend",
-  "version": "1.0.0",
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "lint:html": "htmlhint 'src/**/*.html' 'public/index.html'",
-    "lint:css": "stylelint 'src/css/**/*.css'",
-    "lint:js": "eslint 'src/js/**/*.js'",
-    "lint": "npm run lint:html && npm run lint:css && npm run lint:js"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "next": "16.2.4",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
   },
   "devDependencies": {
-    "htmlhint": "^1.1.4",
-    "stylelint": "^16.0.0",
-    "eslint": "^8.0.0",
-    "axe-cli": "^4.8.0"
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.4",
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }
