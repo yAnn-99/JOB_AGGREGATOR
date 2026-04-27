@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Test Login Form</title>
+</head>
+
+<body>
+
+  <h2>Login Test</h2>
+
+  <form id="addForm" action="/register" method="POST">
+    <div>
+      <label for="email">Email:</label><br>
+      <input type="email" id="email" name="email" required>
+    </div>
+
+    <br>
+
+    <div>
+      <label for="password">Password:</label><br>
+      <input type="password" id="password" name="password" required>
+    </div>
+
+    <br>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    const form1 = document.querySelector("#addForm");
+    form1.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const data = new FormData(e.target);
+      const NewEmail = data.get('email')
+      const NewPassword = data.get('password')
+
+      fetch("http://localhost:3000/register", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: NewEmail,
+          password: NewPassword
+        })
+
+      })
+        .then(async (response) => {
+          const data = await response.json();
+
+          if (response.ok) {
+            alert("user added")
+
+          } else {
+            alert(data.message)
+          }
+        })
+    });
+  </script>
+
+</body>
+
+</html>
