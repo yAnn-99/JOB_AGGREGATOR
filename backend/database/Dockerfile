@@ -1,5 +1,5 @@
-FROM mysql
+FROM postgres
 
 WORKDIR usr/share/app
 
-COPY . . 
+COPY db.sql /docker-entrypoint-initdb.d/

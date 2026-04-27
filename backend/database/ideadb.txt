@@ -1,0 +1,3 @@
+POSTGRE pour bcp de donnée enregistrée (faire recherche pour plus infos)
+
+Stocker infos users pour meilleures recherche de travail (bot)

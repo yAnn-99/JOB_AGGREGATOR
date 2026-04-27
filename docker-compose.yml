@@ -12,6 +12,8 @@ services :
       dockerfile : ./backend/Dockerfile
     ports : 
       - "3000:3000"
+    env_file:
+    - .env
   
   data : 
     build:
@@ -23,5 +25,5 @@ services :
       context : ./backend/database
       dockerfile : ./Dockerfile
     environment:
-      MYSQL_ROOT_PASSWORD: example
-    
+      - POSTGRES_PASSWORD=${PASSWORD}
+      - POSTGRES_DB=db

@@ -1,6 +1,4 @@
 
-
-
 export function TokenCheck() {
     const token = 'hello'
 }
