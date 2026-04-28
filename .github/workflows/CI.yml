@@ -96,20 +96,3 @@ jobs:
           docker compose logs
           docker compose down -v
 
-  # ── 4. Data (low prio — non-blocking) ────────────────────────────────
-  data:
-    name: Data (Python)
-    runs-on: ubuntu-latest
-    continue-on-error: true
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Lint
-        run: |
-          pip install ruff --quiet
-          ruff check data/
