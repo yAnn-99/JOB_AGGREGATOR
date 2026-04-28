@@ -1,19 +1,31 @@
 // import { temp_db } from "../main.ts";
-import {Client} from 'pg';
+import { Client } from 'pg';
 
-const client = new Client({
-  connectionString: process.env.URL,
+export const client = new Client({
+    connectionString: process.env.URL,
 });
 
-//need to insert name and hashed password into the user table
-// will be useful for identification later on
-export async function Insert_User_DB(payload) {
-    const email = payload.email;
-    const password = payload.password;
-    
+export async function Insert_User_DB(payload , password) {
+    const values = [
+        payload.email,
+        password,
+        payload.lastname,
+        payload.firstname,
+    ];
+
+    const query = `INSERT INTO "user"(email, password , lastname , firstname) VALUES($1, $2, $3, $4 )`;
+    try{
+
     await client.connect();
-    await client.query('SELECT NOW()');
-    client.end()
+    await client.query(query, values)
+    await client.query(`SELECT * FROM "user"`)
+    } catch (err) {
+        console.log(err);
+        throw err ;
+    }
+
+
+    // await client.end()
 }
 
 async function Insert_Pref_DB() {

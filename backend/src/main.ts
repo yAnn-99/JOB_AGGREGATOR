@@ -6,7 +6,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { Insert_User_DB } from "./middleware/InsertDB.ts"
 import { MakeToken } from './middleware/MakeJwtToken.ts';
-import { TokenCheck } from './middleware/CheckAuth.ts';
+import { AuthCheck } from './middleware/CheckAuth.ts';
 import bcrypt from 'bcryptjs';
 import { nextTick } from 'node:process';
 import { error } from 'node:console';
@@ -30,31 +30,27 @@ app.use(cors({
 
 ///////////////////////////////////////////////////////////////
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello World!');
+// To protect a route, you have to pass the AuthCheck func in parameter
+
+app.get('/',AuthCheck, (req: Request, res: Response) => {
+  res.send('Hello from protected route');
 });
 
-// export const temp_db = []
 
 app.post('/register', async (req: Request, res: Response) => {
 
-  const user = {
-    email: req.body.email,
-    password: req.body.password
-  }
-
-  const HashedPassword = await bcrypt.hash(user.password, 10)
-
+  const HashedPassword = await bcrypt.hash(req.body.password, 10); // don't know if better to crypt on the fetch or on another var (guess after is more stable)  
+  
   const NewUser = {
-    email: user.email,
-    password: HashedPassword
+    email: req.body.email,
+    firstname : req.body.firstname,
+    lastname : req.body.lastname
+    
   }
-
-  // need to push NewUser in db in the future
-  // await Insert_User_DB(NewUser);
 
 
   const token = MakeToken(NewUser);
+  await Insert_User_DB(NewUser, HashedPassword);
 
   res.cookie("Auth", token, {
     httpOnly: true,
@@ -68,20 +64,25 @@ app.post('/register', async (req: Request, res: Response) => {
 });
 
 
-app.get('/login', async (req: Request, res: Response) => {
+app.post('/login', async (req: Request, res: Response) => { //need to take user input to compare
 
   const token = req.cookies.Auth;
+  
+  const request = {
+    email: req.body.email,
+    password: req.body.password
+  };
 
   if (!token) {
     return res.status(401).json({ message: 'Please log in' });
   }
 
-  const auth = TokenCheck(token);
+  const auth = await AuthCheck(token , request);
 
   if (auth.valid) {
     return res.status(200).json({ message: "Have fun finding a job!!!!!!!!" });
   } else {
-    return res.status(403).json({ message: "Wrong token, try logging in again" })
+    return res.status(403).json({ error : auth.message })
   }
 
 });

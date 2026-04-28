@@ -7,8 +7,7 @@ CREATE TABLE "user" (
   "email" varchar(100) NOT NULL UNIQUE,
   "password" varchar(100) NOT NULL,
   "lastname" varchar(100) NOT NULL,
-  "firstname" varchar(100) NOT NULL,
-  "preference" varchar(100) NOT NULL
+  "firstname" varchar(100) NOT NULL
 );
 
 
@@ -20,5 +19,4 @@ CREATE TABLE "experience" (
     CONSTRAINT "fk_experience_user"
         FOREIGN KEY ("user_id")
         REFERENCES "user" ("id")
-
 );
