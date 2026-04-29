@@ -10,12 +10,12 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  frontend: # L'identifiant du job
+  frontend: 
     name: Frontend
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: frontend # Indentation corrigée ici
+        working-directory: frontend 
 
     steps:
       - uses: actions/checkout@v4

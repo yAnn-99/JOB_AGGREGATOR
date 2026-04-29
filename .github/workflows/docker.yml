@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  docker: # Aligné avec 2 espaces
+  docker: 
     name: Docker
     runs-on: ubuntu-latest
 
@@ -27,7 +27,7 @@ jobs:
         run: docker compose build
 
       - name: Smoke test
-        run: | # Aligné avec name
+        run: | 
           docker compose up -d
           sleep 15
           docker compose ps
