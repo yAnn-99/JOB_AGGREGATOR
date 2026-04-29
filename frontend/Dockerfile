@@ -1,12 +1,10 @@
-FROM nginx:alpine-slim
+FROM node
 
-RUN rm -rf /usr/share/nginx/html/*
+WORKDIR /usr/share/app
 
-COPY . /usr/share/nginx/html
-
-WORKDIR /usr/share/nginx/html
+COPY . .
 
 
-EXPOSE 80
+EXPOSE 8080
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["npm", "run", "dev", "--", "-p", "8080"]
