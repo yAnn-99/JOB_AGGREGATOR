@@ -1,11 +1,11 @@
 // import { temp_db } from "../main.ts";
-import { Client } from 'pg';
+import { Client, Pool } from 'pg';
 
-export const client = new Client({
+export const client = new Pool({
     connectionString: process.env.URL,
 });
 
-export async function Insert_User_DB(payload , password) {
+export async function Insert_User_DB(payload, password) {
     const values = [
         payload.email,
         password,
@@ -13,19 +13,22 @@ export async function Insert_User_DB(payload , password) {
         payload.firstname,
     ];
 
-    const query = `INSERT INTO "user"(email, password , lastname , firstname) VALUES($1, $2, $3, $4 )`;
-    try{
+    try {
+        // await client.connect();
+        const check = await client.query(`SELECT "firstname" FROM "user" WHERE "email" = $1`, [payload.email]);
+        console.log(check.rows)
+        if (check.rows.length > 0) {
+            return { valid: false, message: 'user already created' }
+        } else {
+            await client.query(`INSERT INTO "user"(email, password , lastname , firstname) VALUES($1, $2, $3, $4 )`, values);
+            return { valid: true, message: 'user created' };
 
-    await client.connect();
-    await client.query(query, values)
-    await client.query(`SELECT * FROM "user"`)
+        }
+
     } catch (err) {
         console.log(err);
-        throw err ;
+        return { valid: false, message: err };
     }
-
-
-    // await client.end()
 }
 
 async function Insert_Pref_DB() {

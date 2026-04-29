@@ -9,7 +9,6 @@ import { MakeToken } from './middleware/MakeJwtToken.ts';
 import { AuthCheck } from './middleware/CheckAuth.ts';
 import bcrypt from 'bcryptjs';
 import { nextTick } from 'node:process';
-import { error } from 'node:console';
 
 
 
@@ -50,7 +49,9 @@ app.post('/register', async (req: Request, res: Response) => {
 
 
   const token = MakeToken(NewUser);
-  await Insert_User_DB(NewUser, HashedPassword);
+  const insert = await Insert_User_DB(NewUser, HashedPassword);
+
+  if (insert.valid) {
 
   res.cookie("Auth", token, {
     httpOnly: true,
@@ -59,7 +60,9 @@ app.post('/register', async (req: Request, res: Response) => {
   });
 
   res.status(201).json({ message: 'User added' });
-
+  } else {
+    res.json({message : 'user already existing'})
+  }
 
 });
 
