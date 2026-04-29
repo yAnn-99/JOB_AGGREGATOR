@@ -1,0 +1,18 @@
+# .github/workflows/mirror.yml
+name: Mirror
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+  workflow_dispatch:
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone source as bare mirror
+        run: git clone --bare git@github.com:yAnn-99/JOB_AGGREGATOR.git
+      - name: Push to destination
+        run: git push --mirror git@github.com:EpitechBachelorPromo2028/B-YEP-200-PAR-2-1-jobaggregator-10.git
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   
