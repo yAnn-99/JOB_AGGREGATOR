@@ -1,23 +1,34 @@
-import { MakeToken } from "./MakeJwtToken.ts"
+import type { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { client } from "./InsertDB.ts";
 
 
-export async function AuthCheck(token, payload) {
+export async function AuthCheck(req: Request, res: Response, next: Function) {
+
     const secret = process.env.SECRET;
-    const password = await client.query(`SELECT "password" FROM "user" WHERE "email" = $1`, [payload.email])
+    const token = req.cookies?.Auth;
+    if (!token) return res.status(401).json({ message: "Please log in" });
 
     try {
         const decoded = jwt.verify(token, secret);
-        const match = await bcrypt.compare(payload.password, password.rows[0].password)
-        if (match) {
-            return { valid: true, decoded };
-        } else {
-            return { valid : false , message : "Invalid password"};
-        }
+        req.user = decoded;
+        next();
+        return { message: "Have fun finding a job!!!!!!!!" };
 
     } catch (err) {
-        return { valid: false, message : "Invalid credentials" };
+        return res.status(401).json({ valid: false, message: "Invalid credentials" });
     }
 }
+
+
+export async function AdminCheck(req: Request, res: Response, next: Function) {
+    const TrueEmail = process.env.ADMIN_USERNAME;
+    const TruePassword = process.env.ADMIN_PASSWORD;
+    const { email, password } = req.body
+
+    if (email == TrueEmail && password == TruePassword) {
+        next();
+    } else {
+        return res.status(403).json({ message: "you are not welcome here , go home" });
+
+    }}
