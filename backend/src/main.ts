@@ -96,7 +96,7 @@ app.post('/login', async (req: Request, res: Response) => { //need to take user 
 app.post('/login/admin', async (req: Request, res: Response) => {
   const { email, password } = req.body;
   const TrueEmail = process.env.ADMIN_USERNAME;
-  const TruePassword = await bcrypt.hash(process.env.ADMIN_PASSWORD, 10);
+  const TruePassword = await bcrypt.hash(process.env.ADMIN_PASSWORD!, 10);
 
   if (email == TrueEmail && await bcrypt.compare(password, TruePassword)) {
     const token = MakeToken({ email: email });
