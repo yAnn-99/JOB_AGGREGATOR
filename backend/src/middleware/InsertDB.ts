@@ -1,13 +1,18 @@
 // import { temp_db } from "../main.ts";
 import { Client, Pool } from 'pg';
 
+interface UserInterface {
+    email :string ,
+    lastname : string,
+    firstname : string 
+}
 
 export const client = new Pool({
     connectionString: process.env.URL,
 });
 
 
-export async function Insert_User_DB(payload, password) {
+export async function Insert_User_DB(payload : UserInterface, password : string) {
     const values = [
         payload.email,
         password,

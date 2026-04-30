@@ -4,8 +4,8 @@ import jwt from 'jsonwebtoken';
 
 interface UserPayload {
     email: string;
-    firstname: string;
-    lastname: string;
+    firstname?: string;
+    lastname?: string;
 }
 
 //need to take info from the db and not from export list
