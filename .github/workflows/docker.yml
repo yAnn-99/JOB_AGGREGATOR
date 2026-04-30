@@ -15,7 +15,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+
+      - name: Create .env file from secrets
+        working-directory: 
+        run: |
+          echo "TOKEN=${{ secrets.TOKEN }}" > .env
+          echo "PASSWORD=${{ secrets.PASSWORD }}" >> .env
+          echo "URL=${{ secrets.URL }}" >> .env
+          echo "SECRET=${{ secrets.SECRET }}" >> .env
 
       - name: Validate compose
         run: docker compose config --quiet
@@ -25,14 +33,6 @@ jobs:
 
       - name: Build images
         run: docker compose build
-      
-      - name: Create .env file from secrets
-        working-directory: backend
-        run: |
-          echo "TOKEN=${{ secrets.TOKEN }}" > .env
-          echo "PASSWORD=${{ secrets.PASSWORD }}" >> .env
-          echo "URL=${{ secrets.URL }}" >> .env
-          echo "SECRET=${{ secrets.SECRET }}" >> .env
 
       - name: Smoke test
         run: | 
