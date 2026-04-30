@@ -3,6 +3,8 @@ dotenv.config();
 import express, { response } from "express";
 import type { Request, Response } from 'express';
 import cookieParser from 'cookie-parser';
+import https from "https";
+import fs from "fs";
 import cors from 'cors';
 import { MakeToken } from './middleware/MakeJwtToken.ts';
 import { AuthCheck } from './middleware/CheckAuth.ts';
@@ -111,8 +113,17 @@ app.post('/login/admin', async (req: Request, res: Response) => {
 
 })
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+const sslOptions = {
+  key: fs.readFileSync('/usr/src/app/certs/key.pem'),
+  cert: fs.readFileSync("/usr/src/app/certs/cert.pem")
+};
+
+// app.listen(port, () => {
+//   console.log(`Server running at http://localhost:${port}`);
+// });
+
+https.createServer(sslOptions, app).listen(port, () => {
+  console.log(`HTTPS Server running at https://localhost:${port}`);
 });
 
 
