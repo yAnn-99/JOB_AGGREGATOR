@@ -1,9 +1,3 @@
 POSTGRE pour bcp de donnée enregistrée (faire recherche pour plus infos)
 
 Stocker infos users pour meilleures recherche de travail (bot)
-
-
-pour stocker image : 
-    base donnée vectorielle : moins de place avec compression, moins safe
-
-    cryptage : plus secure , plus lourd 

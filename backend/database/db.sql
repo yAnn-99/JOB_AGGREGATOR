@@ -1,6 +1,6 @@
 
-DROP TABLE IF EXISTS "user";
 DROP TABLE IF EXISTS "experience";
+DROP TABLE IF EXISTS "user";
 
 CREATE TABLE "user" (
   "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -13,8 +13,14 @@ CREATE TABLE "user" (
 
 CREATE TABLE "experience" (
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "job_name" varchar(100) NOT NULL,
-    "description" varchar(500) NOT NULL,
+    "localization" varchar(100) NOT NULL,
+    "permanent_contract" BOOLEAN NOT NULL, 
+    "experience" INT NOT NULL,
+    "start" varchar(100) NOT NULL,
+    CONSTRAINT chk_start CHECK (
+        "start" = 'asap' OR 
+        "start" ~ '^[0-9]{2}/[0-9]{2}/[0-9]{2}$'
+    ),
     "user_id" INT NOT NULL , 
     CONSTRAINT "fk_experience_user"
         FOREIGN KEY ("user_id")
