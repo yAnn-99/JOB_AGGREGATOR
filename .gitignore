@@ -2,3 +2,6 @@
 node_modules/
 id_mirror
 id_mirror_pub
+key.pem
+cert.pem
+certs/

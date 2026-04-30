@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 
 export async function AuthCheck(req: Request, res: Response, next: Function) {
 
-    const secret = process.env.SECRET;
+    const secret = process.env.SECRET!;
     const token = req.cookies?.Auth;
     if (!token) {
         return res.status(401).json({ message: "Please register " });
@@ -22,7 +22,7 @@ export async function AuthCheck(req: Request, res: Response, next: Function) {
 
 
 export async function AdminCheck(req: Request, res: Response, next: Function) {
-    const secret = process.env.SECRET;
+    const secret = process.env.SECRET!;
 
     const token = req.cookies?.AuthAdmin;
     if (!token) {
