@@ -4,3 +4,5 @@ id_mirror
 id_mirror_pub
 key.pem
 cert.pem
+cert.pem
+certs/

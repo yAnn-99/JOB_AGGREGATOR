@@ -3,6 +3,8 @@ dotenv.config();
 import express, { response } from "express";
 import type { Request, Response } from 'express';
 import cookieParser from 'cookie-parser';
+import https from "https";
+import fs from "fs";
 import cors from 'cors';
 import { MakeToken } from './middleware/MakeJwtToken.ts';
 import { AuthCheck } from './middleware/CheckAuth.ts';
@@ -79,7 +81,7 @@ app.post('/login', async (req: Request, res: Response) => { //need to take user 
 
   if (user && await bcrypt.compare(password, user.password)) {
 
-    const token = MakeToken({ id: user.id, email: user.email });
+    const token = MakeToken({email: user.email}); // test fjopisdjfsopifjpiosdjfpiz
     res.cookie("AuthLogin", token, {
       httpOnly: true,
       maxAge: 3600000,
@@ -94,7 +96,7 @@ app.post('/login', async (req: Request, res: Response) => { //need to take user 
 app.post('/login/admin', async (req: Request, res: Response) => {
   const { email, password } = req.body;
   const TrueEmail = process.env.ADMIN_USERNAME;
-  const TruePassword = await bcrypt.hash(process.env.ADMIN_PASSWORD, 10);
+  const TruePassword = await bcrypt.hash(process.env.ADMIN_PASSWORD!, 10);
 
   if (email == TrueEmail && await bcrypt.compare(password, TruePassword)) {
     const token = MakeToken({ email: email });
@@ -111,8 +113,17 @@ app.post('/login/admin', async (req: Request, res: Response) => {
 
 })
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+const sslOptions = {
+  key: fs.readFileSync('/usr/src/app/certs/key.pem'),
+  cert: fs.readFileSync("/usr/src/app/certs/cert.pem")
+};
+
+// app.listen(port, () => {
+//   console.log(`Server running at http://localhost:${port}`);
+// });
+
+https.createServer(sslOptions, app).listen(port, () => {
+  console.log(`HTTPS Server running at https://localhost:${port}`);
 });
 
 
