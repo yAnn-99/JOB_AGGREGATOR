@@ -1,4 +1,4 @@
-name: frontend
+name: backend
 
 on:
   push:
@@ -10,26 +10,30 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  docker: 
-    name: Docker
+  backend:
+    name: Backend
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend 
+
+    env:
+      TOKEN: ${{ secrets.TOKEN }}
+      PASSWORD: ${{ secrets.PASSWORD }}
+      URL: ${{ secrets.URL }}
+      SECRET: ${{ secrets.SECRET }}
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Validate compose
-        run: docker compose config --quiet
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
 
-      - name: Set up Buildx
-        uses: docker/setup-buildx-action@v3
+      - name: Install dependencies
+        run: npm ci 
 
-      - name: Build images
-        run: docker compose build
-
-      - name: Smoke test
-        run: | 
-          docker compose up -d
-          sleep 15
-          docker compose ps
-          docker compose logs
-          docker compose down -v
+      - name: Type-check
+        run: npx tsc --noEmit

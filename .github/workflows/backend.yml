@@ -17,12 +17,6 @@ jobs:
       run:
         working-directory: backend 
 
-    env:
-      TOKEN: ${{ secrets.TOKEN }}
-      PASSWORD: ${{ secrets.PASSWORD }}
-      URL: ${{ secrets.URL }}
-      SECRET: ${{ secrets.SECRET }}
-
     steps:
       - uses: actions/checkout@v4
 
