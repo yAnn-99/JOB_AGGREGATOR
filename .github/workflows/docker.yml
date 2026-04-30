@@ -1,4 +1,4 @@
-name: backend
+name: docker
 
 on:
   push:
@@ -10,30 +10,34 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  backend:
-    name: Backend
+  docker: 
+    name: Docker
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: backend 
-
-    env:
-      TOKEN: ${{ secrets.TOKEN }}
-      PASSWORD: ${{ secrets.PASSWORD }}
-      URL: ${{ secrets.URL }}
-      SECRET: ${{ secrets.SECRET }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-          cache-dependency-path: backend/package-lock.json
+      - name: Validate compose
+        run: docker compose config --quiet
 
-      - name: Install dependencies
-        run: npm ci 
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v4
 
-      - name: Type-check
-        run: npx tsc --noEmit
+      - name: Build images
+        run: docker compose build
+      
+      - name: Create .env file from secrets
+        working-directory: backend
+        run: |
+          echo "TOKEN=${{ secrets.TOKEN }}" > .env
+          echo "PASSWORD=${{ secrets.PASSWORD }}" >> .env
+          echo "URL=${{ secrets.URL }}" >> .env
+          echo "SECRET=${{ secrets.SECRET }}" >> .env
+
+      - name: Smoke test
+        run: | 
+          docker compose up -d
+          sleep 15
+          docker compose ps
+          docker compose logs
+          docker compose down -v
