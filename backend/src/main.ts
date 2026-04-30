@@ -36,7 +36,7 @@ app.get('/user', AuthCheck, (req: Request, res: Response) => {
 });
 
 app.post('/test/admin', AdminCheck, (req: Request, res: Response) => {
-  res.json({ message: 'you are now admin' })
+  res.json({ message: 'you are on the admin page' })
 })
 
 
@@ -57,7 +57,7 @@ app.post('/register', async (req: Request, res: Response) => {
 
   if (insert.valid) {
 
-    res.cookie("Auth", token, {
+    res.cookie("AuthRegister", token, {
       httpOnly: true,
       maxAge: 3600000,
       sameSite: 'lax'
@@ -72,19 +72,44 @@ app.post('/register', async (req: Request, res: Response) => {
 
 app.post('/login', async (req: Request, res: Response) => { //need to take user input to compare
 
-  const { email , password} = req.body;
-  
+  const { email, password } = req.body;
+
   const result = await client.query(`SELECT * FROM "user" WHERE "email" = $1`, [email]);
   const user = result.rows[0];
 
   if (user && await bcrypt.compare(password, user.password)) {
-    
-      const token = MakeToken({ id: user.id, email: user.email });
-      res.cookie("Auth", token, { httpOnly: true })
-      return res.status(200).json({ message: "you are logged in" });
+
+    const token = MakeToken({ id: user.id, email: user.email });
+    res.cookie("AuthLogin", token, {
+      httpOnly: true,
+      maxAge: 3600000,
+      sameSite: 'lax'
+    });
+    return res.status(200).json({ message: "you are logged in" });
   }
-    return res.status(401).json({ message: "Invalid email or password" });
+  return res.status(401).json({ message: "Invalid email or password" });
 });
+
+
+app.post('/login/admin', async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+  const TrueEmail = process.env.ADMIN_USERNAME;
+  const TruePassword = await bcrypt.hash(process.env.ADMIN_PASSWORD, 10);
+
+  if (email == TrueEmail && await bcrypt.compare(password, TruePassword)) {
+    const token = MakeToken({ email: email });
+
+    res.cookie("AuthAdmin", token, {
+      httpOnly: true,
+      maxAge: 3600000,
+      sameSite: 'lax'
+    });
+    return res.status(200).json({message : "you're in soldier"})
+  } else {
+    res.status(401).json({message : 'nope'})
+  }
+
+})
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
