@@ -18,13 +18,13 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Create .env file from secrets
-        working-directory: backend
+        working-directory: 
         run: |
           echo "TOKEN=${{ secrets.TOKEN }}" > .env
           echo "PASSWORD=${{ secrets.PASSWORD }}" >> .env
           echo "URL=${{ secrets.URL }}" >> .env
           echo "SECRET=${{ secrets.SECRET }}" >> .env
-          
+
       - name: Validate compose
         run: docker compose config --quiet
 
