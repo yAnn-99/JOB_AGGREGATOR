@@ -1,9 +1,11 @@
 // import { temp_db } from "../main.ts";
 import { Client, Pool } from 'pg';
 
+
 export const client = new Pool({
     connectionString: process.env.URL,
 });
+
 
 export async function Insert_User_DB(payload, password) {
     const values = [
@@ -16,7 +18,6 @@ export async function Insert_User_DB(payload, password) {
     try {
         // await client.connect();
         const check = await client.query(`SELECT "firstname" FROM "user" WHERE "email" = $1`, [payload.email]);
-        console.log(check.rows)
         if (check.rows.length > 0) {
             return { valid: false, message: 'user already created' }
         } else {
