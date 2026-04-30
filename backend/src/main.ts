@@ -81,7 +81,7 @@ app.post('/login', async (req: Request, res: Response) => { //need to take user 
 
   if (user && await bcrypt.compare(password, user.password)) {
 
-    const token = MakeToken({ id: user.id, email: user.email });
+    const token = MakeToken({email: user.email}); // test fjopisdjfsopifjpiosdjfpiz
     res.cookie("AuthLogin", token, {
       httpOnly: true,
       maxAge: 3600000,
