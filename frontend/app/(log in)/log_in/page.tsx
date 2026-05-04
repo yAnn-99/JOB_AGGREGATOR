@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 const log_in = () => {
@@ -111,7 +110,7 @@ const log_in = () => {
                     href="#"
                     className="w-full flex items-center justify-center px-8 py-3 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
                   >
-                    <Image
+                    <img
                       className="h-5 w-5"
                       src="https://www.svgrepo.com/show/512120/facebook-176.svg"
                       alt=""
@@ -123,7 +122,7 @@ const log_in = () => {
                     href="#"
                     className="w-full flex items-center justify-center px-8 py-3 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
                   >
-                    <Image
+                    <img
                       className="h-5 w-5"
                       src="https://www.svgrepo.com/show/513008/twitter-154.svg"
                       alt=""
@@ -135,7 +134,7 @@ const log_in = () => {
                     href="#"
                     className="w-full flex items-center justify-center px-8 py-3 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
                   >
-                    <Image
+                    <img
                       className="h-6 w-6"
                       src="https://www.svgrepo.com/show/506498/google.svg"
                       alt=""
