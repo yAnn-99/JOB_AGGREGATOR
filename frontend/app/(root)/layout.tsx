@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useState } from "react";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -9,14 +10,14 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <header className="border-b">
         <div className="flex items-center justify-between p-4 md:p-8">
           <h1 className="text-xl md:text-2xl font-bold">
-            <a href="/">Jobly</a>
+            <Link href="/">Jobly</Link>
           </h1>
 
           <div className="hidden md:flex items-center gap-12">
             <nav>
               <ul className="flex items-center gap-8">
                 <li>
-                  <a href="/compagnies">jobs</a>
+                  <Link href="/compagnies">jobs</Link>
                 </li>
                 <li>entreprise</li>
                 <li>salaire</li>
@@ -25,13 +26,12 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             </nav>
 
             <nav>
-              <a href=""></a>
               <ul className="flex items-center gap-6">
                 <li>
-                  <a href="/log_in">log in</a>
+                  <Link href="/log_in">log in</Link>
                 </li>
                 <li className="px-4 py-2 rounded-md bg-indigo-500 text-white hover:bg-indigo-600 transition">
-                  <a href="/sign_up">sign up</a>
+                  <Link href="/sign_up">sign up</Link>
                 </li>
               </ul>
             </nav>
@@ -54,14 +54,14 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             </nav>
 
             <div className="mt-4 flex flex-col gap-3">
-              <a href="/log_in">
+              <Link href="/log_in">
                 <button>log in</button>
-              </a>
-              <a href="/sign_up">
+              </Link>
+              <Link href="/sign_up">
                 <button className="px-4 py-2 bg-indigo-500 text-white rounded-md">
                   sign up
                 </button>
-              </a>
+              </Link>
             </div>
           </div>
         )}
