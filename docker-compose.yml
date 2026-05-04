@@ -8,8 +8,8 @@ services :
 
   back : 
     build :
-      # context: ./backend
-      dockerfile : ./backend/Dockerfile
+      context: ./backend
+      dockerfile : ./Dockerfile
     ports : 
       - "3000:3000"
     env_file:
