@@ -8,4 +8,4 @@ RUN npm ci
 
 COPY . . 
 
-CMD ["node" , "backend/src/main.ts"]
+CMD ["node" , "src/main.ts"]
