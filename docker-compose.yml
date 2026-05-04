@@ -21,6 +21,12 @@ services :
     build:
       context : ./data
       dockerfile : ./Dockerfile
+    env_file:
+      - .env
+    environment : 
+      - URL:${URL}
+    depends_on:
+      - db
 
   db : 
     build :

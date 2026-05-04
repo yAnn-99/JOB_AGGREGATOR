@@ -10,6 +10,8 @@ CREATE TABLE "user" (
   "firstname" varchar(100) NOT NULL
 );
 
+-- need to add a 'suscribed' offer to use in the model'
+
 
 CREATE TABLE "experience" (
     "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
