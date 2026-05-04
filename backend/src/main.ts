@@ -81,7 +81,7 @@ app.post('/login', async (req: Request, res: Response) => { //need to take user 
 
   if (user && await bcrypt.compare(password, user.password)) {
 
-    const token = MakeToken({email: user.email}); // test fjopisdjfsopifjpiosdjfpiz
+    const token = MakeToken({ email: user.email }); // test fjopisdjfsopifjpiosdjfpiz
     res.cookie("AuthLogin", token, {
       httpOnly: true,
       maxAge: 3600000,
@@ -106,12 +106,26 @@ app.post('/login/admin', async (req: Request, res: Response) => {
       maxAge: 3600000,
       sameSite: 'lax'
     });
-    return res.status(200).json({message : "you're in soldier"})
+    return res.status(200).json({ message: "you're in soldier" })
   } else {
-    res.status(401).json({message : 'nope'})
+    res.status(401).json({ message: 'nope' })
   }
 
 })
+
+
+app.post('/test/py', (req: Request, res: Response) => {
+  const userData = req.body;
+
+  console.log("Data received from Python daemon:", userData);
+
+  if (!userData) {
+    return res.status(400).json({ message: "No user data received" });
+  }
+
+  res.status(200).json({ message: "Data received successfully" });
+}
+)
 
 const sslOptions = {
   key: fs.readFileSync('/usr/src/app/certs/key.pem'),

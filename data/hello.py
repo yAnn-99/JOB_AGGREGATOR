@@ -2,17 +2,21 @@ import psycopg2
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
-url = os.getenv("URL")
 
-cnx = psycopg2.connect(url) 
+def fetch():
+    load_dotenv()
+    url = os.getenv("URL")
 
-cur = cnx.cursor()
+    cnx = psycopg2.connect(url)
 
-cur.execute('SELECT * FROM "user"')
+    cur = cnx.cursor()
 
-row = cur.fetchone()
-print(row)
+    cur.execute('SELECT * FROM "user"')
 
-cur.close()
-cnx.close()
+    row = cur.fetchone()
+
+    cur.close()
+    cnx.close()
+    return row
+
+
