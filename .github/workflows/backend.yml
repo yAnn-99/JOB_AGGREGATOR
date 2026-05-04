@@ -28,8 +28,5 @@ jobs:
       - name: Type-check
         run: npx tsc --noEmit
 
-      - name: Type-check
-        run: npx tsc --noEmit
-
       - name: Run Tests
         run: npm test
