@@ -10,7 +10,7 @@ const Page = () => {
           </h1>
 
           <h2 className="text-base sm:text-lg md:text-xl text-gray-600">
-            Des milliers d'offres d'emploi pour booster votre carrière professionnelle
+            {"Des milliers d'offres d'emploi pour booster votre carrière professionnelle"}
           </h2>
 
           <div className="flex w-full flex-col sm:flex-row items-stretch sm:items-center overflow-hidden rounded-md border">
