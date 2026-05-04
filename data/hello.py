@@ -3,19 +3,16 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-secret = os.getenv("SECRET")
 url = os.getenv("URL")
-
-print(url)
 
 cnx = psycopg2.connect(url) 
 
 cur = cnx.cursor()
 
-cur.execute("SELECT CURRENT_DATE")
+cur.execute('SELECT * FROM "user"')
 
 row = cur.fetchone()
-print("Current date is: {0}".format(row[0]))
+print(row)
 
 cur.close()
 cnx.close()
