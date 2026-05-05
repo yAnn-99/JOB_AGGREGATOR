@@ -1,33 +1,108 @@
+"use client";
+import { useState } from "react";
 import Link from "next/link";
 
-const sign_up = () => {
+const Signup = () => {
+  const [formData, setFormData] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    password: "",
+    passwordConf: "",
+  });
+
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const OnSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (formData.password != formData.passwordConf) {
+      alert('Wrong password')
+      return;
+    }
+
+
+    try {
+      const response = await fetch('http://localhost:3000/register', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials : 'include',
+        body: JSON.stringify({
+          firstname: formData.firstname,
+          lastname: formData.lastname,
+          email: formData.email,
+          password: formData.password
+        }),
+
+      });
+      const result = await response.json()
+
+      if (response.ok) {
+        alert('Account created')
+      } else {
+        alert(result.message)
+      }
+    } catch (error) {
+      alert(error)
+    }
+  }
+
   return (
     <div>
       <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            create your account
+            Create your account
           </h2>
         </div>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <form className="space-y-6" action="#" method="POST">
+            <form className="space-y-6" onSubmit={OnSubmit}>
               <div>
                 <label
-                  htmlFor="name"
+                  htmlFor="Firstname"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  name
+                  Firstname
                 </label>
                 <div className="mt-1">
                   <input
-                    id="name"
-                    name="name"
+                    id="Firstname"
+                    name="firstname"
                     type="text"
                     required
+                    value={formData.firstname}
+                    onChange={onChange}
                     className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="Enter your name"
+                    placeholder="Enter your Firstname"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="Lastname"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Lastname
+                </label>
+                <div className="mt-1">
+                  <input
+                    id="Lastname"
+                    name="lastname"
+                    type="text"
+                    required
+                    value={formData.lastname}
+                    onChange={onChange}
+                    className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                    placeholder="Enter your Lastname"
                   />
                 </div>
               </div>
@@ -46,6 +121,8 @@ const sign_up = () => {
                     type="email"
                     autoComplete="email"
                     required
+                    value={formData.email}
+                    onChange={onChange}
                     className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                     placeholder="Enter your email address"
                   />
@@ -66,6 +143,8 @@ const sign_up = () => {
                     type="password"
                     autoComplete="current-password"
                     required
+                    value={formData.password}
+                    onChange={onChange}
                     className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                     placeholder="Enter your password"
                   />
@@ -82,9 +161,11 @@ const sign_up = () => {
                 <div className="mt-1">
                   <input
                     id="passwordConfirmation"
-                    name="passwordConfirmation"
+                    name="passwordConf"
                     type="password"
                     required
+                    value={formData.passwordConf}
+                    onChange={onChange}
                     className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                     placeholder="Enter your password"
                   />
@@ -123,6 +204,7 @@ const sign_up = () => {
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-gray-300"></div>
                 </div>
+
                 <div className="relative flex justify-center text-sm">
                   <span className="px-2 bg-gray-100 text-gray-500">
                     Or continue with
@@ -176,4 +258,5 @@ const sign_up = () => {
   );
 };
 
-export default sign_up;
+
+export default Signup;

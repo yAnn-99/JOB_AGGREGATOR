@@ -14,7 +14,6 @@ import { Insert_User_DB } from './middleware/InsertDB.ts';
 import { client } from './middleware/InsertDB.ts';
 
 
-
 // const Token = process.env.TOKEN
 // console.log(Token)
 
@@ -81,7 +80,7 @@ app.post('/login', async (req: Request, res: Response) => { //need to take user 
 
   if (user && await bcrypt.compare(password, user.password)) {
 
-    const token = MakeToken({email: user.email}); // test fjopisdjfsopifjpiosdjfpiz
+    const token = MakeToken({email: user.email});
     res.cookie("AuthLogin", token, {
       httpOnly: true,
       maxAge: 3600000,
@@ -113,17 +112,9 @@ app.post('/login/admin', async (req: Request, res: Response) => {
 
 })
 
-const sslOptions = {
-  key: fs.readFileSync('/usr/src/app/certs/key.pem'),
-  cert: fs.readFileSync("/usr/src/app/certs/cert.pem")
-};
-
-// app.listen(port, () => {
-//   console.log(`Server running at http://localhost:${port}`);
-// });
-
-https.createServer(sslOptions, app).listen(port, () => {
-  console.log(`HTTPS Server running at https://localhost:${port}`);
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
 });
+
 
 
