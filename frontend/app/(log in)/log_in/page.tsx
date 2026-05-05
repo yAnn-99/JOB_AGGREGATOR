@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import Link from "next/link";
 
-const log_in = () => {
+const Login = () => {
 
   const [formData, setFormData] = useState({
     email: "",
