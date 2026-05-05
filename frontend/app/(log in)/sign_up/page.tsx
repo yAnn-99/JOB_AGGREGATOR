@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 
-const sign_up = () => {
+const Signup = () => {
   const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
@@ -259,4 +259,4 @@ const sign_up = () => {
 };
 
 
-export default sign_up;
+export default Signup;
