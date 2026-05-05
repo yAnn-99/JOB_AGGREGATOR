@@ -199,4 +199,4 @@ const Login = () => {
   );
 };
 
-export default log_in;
+export default Login;
