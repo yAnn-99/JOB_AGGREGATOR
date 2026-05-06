@@ -33,6 +33,9 @@ const columns: GridColDef<(typeof rows)[number]>[] = [
 //   },
 ];
 
+
+// need to make it itter through every entity in the db and add them in here
+
 const rows = [
   { id: 1, email: 'fjkfdsj', lastname: 'Jon', firstname: 'jfdkjfsd' },
   { id: 2, email: 'fjkfdsj', lastname: 'Jon', firstname: 'kfdjlfksd' },
