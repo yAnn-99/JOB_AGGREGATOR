@@ -7,7 +7,12 @@ export default function Admin() {
             {/* to do that may need to fetch localhost:3000/user , and display infos as a excel table on the frontend*/}
                 <h1>Data table</h1>
 
-                <DataGridD></DataGridD>
+                <DataGridD/>
+
+                <div className="flex mt-5 flex-row-reverse">
+                    <button className="mr-6 bg-amber-500 p-2 rounded-xl">Block</button>
+                    <button className="mr-6 bg-red-800 p-2 rounded-xl">Delete</button>
+                </div>
                 
         </main>
     )
