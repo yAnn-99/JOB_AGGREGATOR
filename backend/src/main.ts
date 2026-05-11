@@ -75,6 +75,10 @@ app.post('/login', async (req: Request, res: Response) => { //need to take user 
 
   const result = await client.query(`SELECT * FROM "user" WHERE "email" = $1`, [email]);
   const user = result.rows[0];
+  
+  if (user.blocked == true) {
+    res.status(401).json({message : 'You have been blocked, get lost'})
+  }
 
   if (user && await bcrypt.compare(password,user.password)) {
 

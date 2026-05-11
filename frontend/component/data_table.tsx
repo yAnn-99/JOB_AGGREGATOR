@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ReactEventHandler } from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
@@ -37,7 +37,7 @@ const columns: GridColDef[] = [
 
 
 
-export default function DataGridD() {
+export default function DataGridD({ onSelectionChange }: { onSelectionChange?: (id: number) => void }) {
   const [rows, setRows] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [isClient, setIsClient] = useState(false);
@@ -61,9 +61,9 @@ export default function DataGridD() {
     loadUsers();
   }, []);
 
-   if (!isClient) {
-      return null;
-    }
+  if (!isClient) {
+    return null;
+  }
 
   return (
     <Box sx={{ height: 400, width: '100%' }}>
@@ -77,9 +77,9 @@ export default function DataGridD() {
           },
         }}
         pageSizeOptions={[5]}
-        checkboxSelection
         disableRowSelectionOnClick
       />
     </Box>
+
   );
 }
