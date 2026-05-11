@@ -82,7 +82,9 @@ export default function DataGridD({ onSelectionChange }: { onSelectionChange?: (
       <DataGrid
         rows={rows}
         columns={columns}
+        loading={loading} // Now 'loading' is used
         getRowId={(row) => row.id || row.email}
+        onRowClick={handleRowClick} // Now 'onSelectionChange' is used
         initialState={{
           pagination: {
             paginationModel: { pageSize: 5 },
@@ -92,6 +94,5 @@ export default function DataGridD({ onSelectionChange }: { onSelectionChange?: (
         disableRowSelectionOnClick
       />
     </Box>
-
   );
 }
