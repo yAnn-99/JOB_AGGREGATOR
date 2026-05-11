@@ -8,7 +8,7 @@ export default function ManageUser({ userId }: { userId?: string }) {
 
 
     const blockUser = async () => {
-        if (!TrueId) {
+        if (TrueId == "") {
             return alert('Input your id')
         }
         try {
@@ -24,7 +24,7 @@ export default function ManageUser({ userId }: { userId?: string }) {
     };
 
     const delUser = async () => {
-        if (!TrueId) {
+        if (TrueId == "") {
             return alert('Input your id')
         }
         try {
@@ -40,7 +40,7 @@ export default function ManageUser({ userId }: { userId?: string }) {
     };
 
     const UnblockUser = async () => {
-        if (!TrueId) {
+        if (TrueId == "") {
             return alert('Input your id')
         }
         try {
