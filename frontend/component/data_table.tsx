@@ -3,6 +3,14 @@ import { useState, useEffect, ReactEventHandler } from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
+interface User {
+  id: number;
+  email: string;
+  lastname: string;
+  firstname: string;
+  blocked: boolean;
+}
+
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID', width: 90 },
@@ -35,16 +43,13 @@ const columns: GridColDef[] = [
 ];
 
 
-
-
 export default function DataGridD({ onSelectionChange }: { onSelectionChange?: (id: number) => void }) {
-  const [rows, setRows] = useState<any[]>([]);
+  const [rows, setRows] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
-
     const loadUsers = async () => {
       try {
         const response = await fetch('http://localhost:3000/user');
@@ -61,6 +66,12 @@ export default function DataGridD({ onSelectionChange }: { onSelectionChange?: (
     };
     loadUsers();
   }, []);
+
+  const handleRowClick = (params: GridRowParams) => {
+    if (onSelectionChange) {
+      onSelectionChange(params.id as number);
+    }
+  };
 
   if (!isClient) {
     return null;
