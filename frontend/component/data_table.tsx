@@ -48,10 +48,9 @@ export default function DataGridD({ onSelectionChange }: { onSelectionChange?: (
   const [loading, setLoading] = useState(true);
   const [isClient, setIsClient] = useState(false);
 
-  setIsClient(true);
-
   useEffect(() => {
-    const loadUsers = async () => {
+      Promise.resolve().then(() => setIsClient(true));    
+      const loadUsers = async () => {
       try {
         const response = await fetch('http://localhost:3000/user');
         const data = await response.json();
@@ -83,9 +82,9 @@ export default function DataGridD({ onSelectionChange }: { onSelectionChange?: (
       <DataGrid
         rows={rows}
         columns={columns}
-        loading={loading} // Now 'loading' is used
+        loading={loading}
         getRowId={(row) => row.id || row.email}
-        onRowClick={handleRowClick} // Now 'onSelectionChange' is used
+        onRowClick={handleRowClick} 
         initialState={{
           pagination: {
             paginationModel: { pageSize: 5 },

@@ -2,6 +2,7 @@ import DataGridD from "@/component/data_table"
 import ManageUser from "@/component/UserManagement"
 
 export default function Admin() {
+
     return (
         <main>
             {/* add input to help admin see db, like parametered query where they can search for someone info (name, email...) and get desired result (all infos or specific one) */}
