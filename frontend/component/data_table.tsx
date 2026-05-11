@@ -44,6 +44,7 @@ export default function DataGridD({ onSelectionChange }: { onSelectionChange?: (
 
   useEffect(() => {
     setIsClient(true);
+
     const loadUsers = async () => {
       try {
         const response = await fetch('http://localhost:3000/user');
