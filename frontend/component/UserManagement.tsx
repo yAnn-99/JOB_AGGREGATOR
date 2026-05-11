@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 
 export default function ManageUser({ userId }: { userId?: string }) {
-    const [TrueId, SetId] = useState<any>(userId);
+    const [TrueId, SetId] = useState<string | undefined>(userId);
 
 
     const blockUser = async () => {
