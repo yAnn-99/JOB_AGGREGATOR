@@ -6,11 +6,10 @@ import { useEffect, useState } from "react";
 export default function ManageUser({ userId }: { userId?: number }) {
     const [TrueId, SetId] = useState<any>(userId);
 
-    useEffect( () => {
-        if (userId == undefined) {
-            SetId(userId)
-        }
-    }, [userId]);
+    if (userId == undefined) {
+        SetId(userId)
+    }
+
     const blockUser = async () => {
         if (!TrueId) {
             return alert('Input your id')
@@ -64,7 +63,7 @@ export default function ManageUser({ userId }: { userId?: number }) {
 
 
         <div className="flex mt-5 flex-col lg:flex-row-reverse  gap-4 p-4 w-full">
-            
+
             <button onClick={UnblockUser} className="lg:mr-6 lg:pr-3 lg:pl-3 bg-green-500 hover:bg-green-700 p-2 rounded-xl ">Unblock</button>
             <button onClick={blockUser} className="lg:mr-6 lg:pr-3 lg:pl-3 bg-amber-500 hover:bg-amber-700 p-2 rounded-xl">Block</button>
             <button onClick={delUser} className="lg:mr-6 lg:pr-3 lg:pl-3 bg-red-800 hover:bg-red-950 p-2 rounded-xl">Delete</button>
