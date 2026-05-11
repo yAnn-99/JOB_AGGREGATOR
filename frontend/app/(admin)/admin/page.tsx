@@ -1,4 +1,5 @@
 import DataGridD from "@/component/data_table"
+import ManageUser from "@/component/UserManagement"
 
 export default function Admin() {
     return (
@@ -8,11 +9,7 @@ export default function Admin() {
                 <h1>Data table</h1>
 
                 <DataGridD/>
-
-                <div className="flex mt-5 flex-row-reverse">
-                    <button className="mr-6 bg-amber-500 p-2 rounded-xl">Block</button>
-                    <button className="mr-6 bg-red-800 p-2 rounded-xl">Delete</button>
-                </div>
+                <ManageUser/>
                 
         </main>
     )
