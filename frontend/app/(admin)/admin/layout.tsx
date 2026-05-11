@@ -12,7 +12,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           <h1 className="text-xl md:text-2xl font-bold">
             <Link href="/">Jobly</Link>
           </h1>        
-          <div className="flex flex-row text-xl md:text-2xl font-extrabold ">Admin page</div>
+          <div className="flex flex-row text-xl md:text-2xl font-bold font-montserrat ">Admin page</div>
 
         </div>
 
