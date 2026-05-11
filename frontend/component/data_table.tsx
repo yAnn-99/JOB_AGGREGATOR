@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect, ReactEventHandler } from 'react';
 import Box from '@mui/material/Box';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridColDef , GridRowParams } from '@mui/x-data-grid';
 
 interface User {
   id: number;
