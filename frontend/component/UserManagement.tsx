@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 
 
 export default function ManageUser({ userId }: { userId?: number }) {
-    const [TrueId, SetId] = useState<any>("");
+    const [TrueId, SetId] = useState<any>(userId);
 
-    useEffect(() => {
-        if (userId) {
+    useEffect( () => {
+        if (userId == undefined) {
             SetId(userId)
         }
     }, [userId]);
