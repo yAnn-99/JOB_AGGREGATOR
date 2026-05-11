@@ -5,6 +5,7 @@ interface UserInterface {
     email :string ,
     lastname : string,
     firstname : string 
+    blocked : Boolean
 }
 
 export const client = new Pool({
@@ -18,6 +19,7 @@ export async function Insert_User_DB(payload : UserInterface, password : string)
         password,
         payload.lastname,
         payload.firstname,
+        payload.blocked
     ];
 
     try {
@@ -26,7 +28,7 @@ export async function Insert_User_DB(payload : UserInterface, password : string)
         if (check.rows.length > 0) {
             return { valid: false, message: 'user already created' }
         } else {
-            await client.query(`INSERT INTO "user"(email, password , lastname , firstname) VALUES($1, $2, $3, $4 )`, values);
+            await client.query(`INSERT INTO "user"(email, password , lastname , firstname , blocked) VALUES($1, $2, $3, $4 , $5 )`, values);
             return { valid: true, message: 'user created' };
 
         }
