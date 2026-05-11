@@ -4,7 +4,7 @@ import { useState } from "react";
 
 
 export default function ManageUser({ userId }: { userId?: string }) {
-    const [TrueId, SetId] = useState<string | undefined>(userId);
+    const [TrueId, SetId] = useState<string>(userId ?? "");
 
 
     const blockUser = async () => {
