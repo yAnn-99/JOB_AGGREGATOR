@@ -25,7 +25,7 @@ const Login = () => {
 
 
     try {
-      const response = await fetch('http://localhost:3000/login', {
+      const response = await fetch('http://localhost:3000/login/admin', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: 'include',
@@ -39,7 +39,7 @@ const Login = () => {
       const result = await response.json()
 
       if (response.ok) {
-        router.push("/");
+        router.push("/admin");
         alert('You are logged in');
       } else {
         alert(result.message)
@@ -58,8 +58,7 @@ const Login = () => {
             Sign in to your account
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600 max-w">
-            Or <a href="/sign_up" className="font-medium text-blue-600 hover:text-blue-500">create an account</a><br/>
-            Or <a href="/admin_login" className="font-medium text-blue-600 hover:text-blue-500"> Log in as an admin</a>
+            Or <a href="/sign_up" className="font-medium text-blue-600 hover:text-blue-500">create an account</a>
           </p>
         </div>
 

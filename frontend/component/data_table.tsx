@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect, ReactEventHandler } from 'react';
 import Box from '@mui/material/Box';
-import { DataGrid, GridColDef , GridRowParams } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRowParams } from '@mui/x-data-grid';
 
 interface User {
   id: number;
@@ -49,10 +49,13 @@ export default function DataGridD({ onSelectionChange }: { onSelectionChange?: (
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-      Promise.resolve().then(() => setIsClient(true));    
-      const loadUsers = async () => {
+    Promise.resolve().then(() => setIsClient(true));
+    const loadUsers = async () => {
       try {
-        const response = await fetch('http://localhost:3000/user');
+        const response = await fetch('http://localhost:3000/user', {
+          method: 'GET',
+          credentials: 'include',
+        });
         const data = await response.json();
 
         if (response.ok) {
@@ -84,7 +87,7 @@ export default function DataGridD({ onSelectionChange }: { onSelectionChange?: (
         columns={columns}
         loading={loading}
         getRowId={(row) => row.id || row.email}
-        onRowClick={handleRowClick} 
+        onRowClick={handleRowClick}
         initialState={{
           pagination: {
             paginationModel: { pageSize: 5 },
