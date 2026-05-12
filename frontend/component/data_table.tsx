@@ -12,6 +12,7 @@ interface User {
 }
 
 
+
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID', width: 90 },
   {
@@ -60,7 +61,7 @@ export default function DataGridD({ onSelectionChange }: { onSelectionChange?: (
 
         if (response.ok) {
           setRows(data);
-        }
+        } 
       } catch (error) {
         console.error("Fetch error:", error);
       } finally {
