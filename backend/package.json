@@ -17,9 +17,12 @@
     "@types/pg": "^8.20.0",
     "jest": "^30.3.0",
     "ts-jest": "^29.4.9",
-    "typescript": "^5.0.0"
+    "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
   },
   "scripts": {
-    "test": "jest --passWithNoTests"
+    "test": "jest --passWithNoTests",
+    "dev": "tsx watch src/main.ts"
   }
 }
