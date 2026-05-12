@@ -12,6 +12,7 @@ import { Insert_User_DB } from './middleware/InsertDB.ts';
 import { client } from './middleware/InsertDB.ts';
 import jobsroutes from "./routes/jobs.routes.ts";
 import userrouter from './routes/UserManagement.ts';
+import {rateLimit} from 'express-rate-limit';
 
 // const Token = process.env.TOKEN
 // console.log(Token)
@@ -37,6 +38,12 @@ app.use("/api/jobs", jobsroutes);
 // });
 
 
+var limiter = rateLimit({
+    windowMs: 1 * 60 * 1000, // 1 minute
+    max: 40, // max >= 40 requests per windowMs
+})
+
+app.use(limiter);
 
 
 app.post('/register', async (req: Request, res: Response) => {
