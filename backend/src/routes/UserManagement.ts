@@ -10,7 +10,7 @@ import { client } from '../middleware/InsertDB.ts';
 
 var limiter = rateLimit({
     windowMs: 1 * 60 * 1000, // 1 minute
-    max: 3599, // max >3600 requests per windowMs
+    max: 40, // max >= 40 requests per windowMs
 })
 
 router.use(limiter);
