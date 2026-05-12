@@ -1,6 +1,51 @@
+"use client";
+import { useState } from "react";
+
 import Link from "next/link";
 
-const log_in = () => {
+const Login = () => {
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: ""
+  });
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const OnSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+
+    try {
+      const response = await fetch('http://localhost:3000/login', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: 'include',
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password
+        })
+
+      })
+
+      const result = await response.json()
+
+      if (response.ok) {
+        alert('You are logged in');
+      } else {
+        alert(result.message)
+      }
+    } catch (error) {
+      alert(error)
+    }
+  }
+
+
   return (
     <div>
       <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -9,13 +54,13 @@ const log_in = () => {
             Sign in to your account
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600 max-w">
-            Or <a href="/sign_up"className="font-medium text-blue-600 hover:text-blue-500">create an account</a>
+            Or <a href="/sign_up" className="font-medium text-blue-600 hover:text-blue-500">create an account</a>
           </p>
         </div>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <form className="space-y-6" action="#" method="POST">
+            <form className="space-y-6" onSubmit={OnSubmit}>
               <div>
                 <label
                   htmlFor="email"
@@ -30,6 +75,8 @@ const log_in = () => {
                     type="email"
                     autoComplete="email"
                     required
+                    value={formData.email}
+                    onChange={onChange}
                     className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                     placeholder="Enter your email address"
                   />
@@ -50,6 +97,8 @@ const log_in = () => {
                     type="password"
                     autoComplete="current-password"
                     required
+                    value={formData.password}
+                    onChange={onChange}
                     className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                     placeholder="Enter your password"
                   />
@@ -150,4 +199,4 @@ const log_in = () => {
   );
 };
 
-export default log_in;
+export default Login;
