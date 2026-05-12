@@ -11,6 +11,7 @@ import { AdminCheck } from './middleware/CheckAuth.ts';
 import { Insert_User_DB } from './middleware/InsertDB.ts';
 import { client } from './middleware/InsertDB.ts';
 import jobsroutes from "./routes/jobs.routes.ts";
+import userrouter from './routes/UserManagement.ts';
 
 // const Token = process.env.TOKEN
 // console.log(Token)
@@ -60,9 +61,9 @@ app.post('/register', async (req: Request, res: Response) => {
       sameSite: 'lax'
     });
 
-    res.status(201).json({ message: 'User added' });
+    return res.status(201).json({ message: 'User added' });
   } else {
-    res.json({ message: 'user already existing' })
+    return res.json({ message: 'user already existing' })
   }
 
 
@@ -75,9 +76,13 @@ app.post('/login', async (req: Request, res: Response) => { //need to take user 
 
   const result = await client.query(`SELECT * FROM "user" WHERE "email" = $1`, [email]);
   const user = result.rows[0];
+
+  if (!user) {
+    return res.status(401).json({ message: " user does not exist" });
+  }
   
   if (user.blocked == true) {
-    res.status(401).json({message : 'You have been blocked, get lost'})
+    return res.status(401).json({message : 'You have been blocked, get lost'})
   }
 
   if (user && await bcrypt.compare(password,user.password)) {
@@ -114,7 +119,7 @@ app.post('/login/admin', async (req: Request, res: Response) => {
 
 })
 
-app.use('/', Urouter);
+app.use('/user', userrouter);
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
