@@ -71,7 +71,7 @@ export default function ManageUser({ userId }: { userId?: string }) {
             <Button variant="contained" onClick={blockUser} sx={{backgroundColor : red[300]}} startIcon={<CancelIcon/>} >Block</Button>
             <Button variant="contained" onClick={delUser} sx={{backgroundColor : red[800]}} startIcon={<DeleteIcon />}>Delete</Button>
 
-            <form className="mr-6 lg:flex-1" onSubmit={(e) => e.preventDefault()}>
+            <form className=" lg:flex-1" onSubmit={(e) => e.preventDefault()}>
                 <label className="font-extrabold mb-5"> Id: </label>
                 {/* <input type="text" name="id" value={TrueId} onChange={(e) => SetId(e.target.value)} className="border-2 w-full" /> */}
                 <TextField id="outlined-basic" label="Input the desired Id..." variant="outlined" value={TrueId} onChange={(e) => SetId(e.target.value)} className='border-2 w-full' />            
