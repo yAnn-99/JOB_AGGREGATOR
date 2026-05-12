@@ -1,12 +1,20 @@
 import express from 'express';
 import type { Request, Response } from 'express';
 import { AdminCheck } from '../middleware/CheckAuth.ts';
-
+import {rateLimit} from 'express-rate-limit';
 
 const router = express.Router()
 import { client } from '../middleware/InsertDB.ts';
 
 //
+
+var limiter = rateLimit({
+    windowMs: 1 * 60 * 1000, // 1 minute
+    max: 3599, // max >3600 requests per windowMs
+})
+
+router.use(limiter);
+
 
 router.get('/',AdminCheck, async (req: Request, res: Response) => {
 
@@ -36,6 +44,7 @@ router.put('/block/:id',AdminCheck, async (req: Request, res: Response) => {
     }
 
 });
+
 
 router.put('/unblock/:id',AdminCheck, async (req: Request, res: Response) => {
     try {
