@@ -7,7 +7,8 @@ CREATE TABLE "user" (
   "email" varchar(100) NOT NULL UNIQUE,
   "password" varchar(100) NOT NULL,
   "lastname" varchar(100) NOT NULL,
-  "firstname" varchar(100) NOT NULL
+  "firstname" varchar(100) NOT NULL,
+  "blocked" BOOLEAN NOT NULL
 );
 
 
