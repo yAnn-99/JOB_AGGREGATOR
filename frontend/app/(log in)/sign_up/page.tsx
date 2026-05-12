@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 const Signup = () => {
@@ -10,6 +11,8 @@ const Signup = () => {
     password: "",
     passwordConf: "",
   });
+
+  const router = useRouter()
 
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,6 +47,7 @@ const Signup = () => {
       const result = await response.json()
 
       if (response.ok) {
+        router.push('/log_in');
         alert('Account created')
       } else {
         alert(result.message)

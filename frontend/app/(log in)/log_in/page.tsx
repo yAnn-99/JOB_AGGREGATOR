@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import Link from "next/link";
 
@@ -9,6 +10,8 @@ const Login = () => {
     email: "",
     password: ""
   });
+
+  const router = useRouter();
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -36,6 +39,7 @@ const Login = () => {
       const result = await response.json()
 
       if (response.ok) {
+        router.push("/");
         alert('You are logged in');
       } else {
         alert(result.message)
