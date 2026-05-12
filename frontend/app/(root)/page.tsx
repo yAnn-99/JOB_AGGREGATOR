@@ -47,7 +47,7 @@ const Page = () => {
               width={800}
               height={800}
               alt="Job"
-              className="relative bg-[#1976d2] p-4 rounded-md lg:visible"
+              className="relative bg-[#1976d2] p-4 rounded-md lg:visible md:invisible sm:invisible"
             />
           </div>
         </div>
