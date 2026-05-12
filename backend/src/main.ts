@@ -80,12 +80,12 @@ app.post('/login', async (req: Request, res: Response) => { //need to take user 
   if (!user) {
     return res.status(401).json({ message: " user does not exist" });
   }
-  
+
   if (user.blocked == true) {
-    return res.status(401).json({message : 'You have been blocked, get lost'})
+    return res.status(401).json({ message: 'You have been blocked, get lost' })
   }
 
-  if (user && await bcrypt.compare(password,user.password)) {
+  if (user && await bcrypt.compare(password, user.password)) {
 
     const token = MakeToken({ email: user.email });
     res.cookie("AuthLogin", token, {
@@ -118,6 +118,7 @@ app.post('/login/admin', async (req: Request, res: Response) => {
   }
 
 })
+
 
 app.use('/user', userrouter);
 
