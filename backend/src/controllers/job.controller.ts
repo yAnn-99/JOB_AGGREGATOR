@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import type { Request, Response } from 'express';
 import { WeLoveDevsService } from "../services/welovedevs.service.ts";
 
 export class JobsController {

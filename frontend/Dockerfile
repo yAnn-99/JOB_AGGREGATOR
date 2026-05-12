@@ -4,6 +4,7 @@ WORKDIR /usr/share/app
 
 COPY . .
 
+RUN npm ci
 
 EXPOSE 8080
 

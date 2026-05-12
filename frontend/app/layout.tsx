@@ -23,10 +23,6 @@ export const metadata: Metadata = {
   description: "find your dream job and blow up",
 };
 
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  variable: "--font-montserrat",
-});
 
 export default function RootLayout({
   children,
