@@ -12,7 +12,7 @@ import bcrypt from 'bcryptjs';
 import { AdminCheck } from './middleware/CheckAuth.ts';
 import { Insert_User_DB } from './middleware/InsertDB.ts';
 import { client } from './middleware/InsertDB.ts';
-
+import jobsroutes from "./routes/jobs.routes.ts";
 
 // const Token = process.env.TOKEN
 // console.log(Token)
@@ -27,7 +27,8 @@ app.use(cors({
   credentials: true
 }));
 
-
+app.use(express.json());
+app.use("/api/jobs", jobsroutes);
 ///////////////////////////////////////////////////////////////
 
 // To protect a route, you have to pass the AuthCheck func in parameter
