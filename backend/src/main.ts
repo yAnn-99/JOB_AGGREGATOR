@@ -21,7 +21,7 @@ import * as lusca from 'lusca';
 const app = express();
 const port = 3000;
 
-const secret : string = process.env.SECRET || "";
+const secret : string = process.env.SECRET!;
 
 var limiter = rateLimit({
     windowMs: 1 * 60 * 1000, // 1 minute
