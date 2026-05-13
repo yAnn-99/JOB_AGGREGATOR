@@ -47,10 +47,12 @@ const Page = () => {
               width={800}
               height={800}
               alt="Job"
-              className="relative bg-[#1976d2] p-4 rounded-md lg:visible"
+              className="relative bg-[#1976d2] p-4 rounded-md lg:visible md:invisible sm:invisible"
             />
+
           </div>
-        </div>
+        </div>          
+        <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-[clamp(200px,80vw,80vw)] h-[clamp(200px,80vw,80vw)] bg-[#1976d2] rotate-45 rounded-md -z-10 lg:hidden pointer-events-none md:invisible"></div>
       </div>
     </main>
   );

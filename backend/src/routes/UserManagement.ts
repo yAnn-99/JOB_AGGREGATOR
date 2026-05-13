@@ -29,7 +29,6 @@ router.delete('/delete/:id',AdminCheck, async (req: Request, res: Response) => {
         const result = await client.query(`DELETE FROM "user" WHERE "id" = $1`, [id])
         res.send('user deleted')
     } catch (error) {
-        res.send(error);
     }
 
 });
@@ -40,7 +39,6 @@ router.put('/block/:id',AdminCheck, async (req: Request, res: Response) => {
         const result = await client.query(`UPDATE "user" SET "blocked" = True WHERE "id" = $1`, [id])
         res.send('user blocked')
     } catch (error) {
-        res.send(error)
     }
 
 });
@@ -53,7 +51,6 @@ router.put('/unblock/:id',AdminCheck, async (req: Request, res: Response) => {
         res.send('user unblocked');
 
     } catch (error) {
-        res.send(error)
     }
 })
 
