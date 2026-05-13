@@ -13,22 +13,36 @@ import { client } from './middleware/InsertDB.ts';
 import jobsroutes from "./routes/jobs.routes.ts";
 import userrouter from './routes/UserManagement.ts';
 import {rateLimit} from 'express-rate-limit';
+import session from 'express-session';
 import * as lusca from 'lusca';
 // const Token = process.env.TOKEN
 // console.log(Token)
 
 const app = express();
 const port = 3000;
+
+const secret : string = process.env.SECRET || "";
+
+var limiter = rateLimit({
+    windowMs: 1 * 60 * 1000, // 1 minute
+    max: 40, // max >= 40 requests per windowMs
+})
+
+app.use(session({
+  secret: secret,
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}));
+
 app.use(cookieParser());
 app.use(express.json());
-app.use(lusca.csrf())
-
+app.use(limiter);
+app.use(lusca.csrf({allowlist: ['/login', '/register', '/login/admin']}))
 app.use(cors({
   origin: 'http://localhost:8080',
   credentials: true
 }));
-
-app.use(express.json());
 app.use("/api/jobs", jobsroutes);
 ///////////////////////////////////////////////////////////////
 
@@ -38,13 +52,6 @@ app.use("/api/jobs", jobsroutes);
 //   res.json({ message: 'Hello from protected route' });
 // });
 
-
-var limiter = rateLimit({
-    windowMs: 1 * 60 * 1000, // 1 minute
-    max: 40, // max >= 40 requests per windowMs
-})
-
-app.use(limiter);
 
 
 app.post('/register', async (req: Request, res: Response) => {
@@ -122,7 +129,7 @@ app.post('/login/admin', async (req: Request, res: Response) => {
     });
     return res.status(200).json({ message: "you're in soldier" })
   } else {
-    res.status(401).json({ message: 'nope' })
+    return res.status(401).json({ message: 'nope' })
   }
 
 })
