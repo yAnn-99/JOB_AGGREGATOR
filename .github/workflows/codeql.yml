@@ -2,15 +2,9 @@ name: "CodeQL Analysis"
 
 on:
   push:
-    branches: ["main", "devOps-tryout"]
-    paths:
-      - 'frontend/**'
-      - 'backend/**'
+    branches: ["main"]
   pull_request:
-    branches: ["main", "devOps-tryout"]
-    paths:
-      - 'frontend/**'
-      - 'backend/**'
+    branches: ["main"]
 
 jobs:
   analyze:
