@@ -1,4 +1,5 @@
 export interface JobVector {
+
   vector: number[];
 
   id: string;

@@ -1,21 +1,35 @@
 export function cosineSimilarity(
-  vectorA: number[],
-  vectorB: number[]
-) {
-  let dotProduct = 0;
-  let normA = 0;
-  let normB = 0;
+  vecA: number[],
+  vecB: number[]
+): number {
 
-  for (let i = 0; i < vectorA.length; i++) {
-    dotProduct += vectorA[i] * vectorB[i];
+  const dotProduct =
+    vecA.reduce(
+      (sum, a, index) =>
+        sum + a * vecB[index],
+      0
+    );
 
-    normA += vectorA[i] * vectorA[i];
+  const magnitudeA =
+    Math.sqrt(
+      vecA.reduce(
+        (sum, a) =>
+          sum + a * a,
+        0
+      )
+    );
 
-    normB += vectorB[i] * vectorB[i];
-  }
+  const magnitudeB =
+    Math.sqrt(
+      vecB.reduce(
+        (sum, b) =>
+          sum + b * b,
+        0
+      )
+    );
 
   return (
     dotProduct /
-    (Math.sqrt(normA) * Math.sqrt(normB))
+    (magnitudeA * magnitudeB)
   );
 }

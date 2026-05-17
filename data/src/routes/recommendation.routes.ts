@@ -1,31 +1,41 @@
 import express from "express";
 import { JobsService } from "../services/jobs.service.js";
 import { RecommendationService } from "../services/recommendation.service.js";
-import type {UserProfile} from "../types/recommendation.types.js";
+
+import type {
+  UserProfile
+} from "../types/recommendation.types.js";
 
 const router = express.Router();
 
 router.post("/", async (req, res) => {
 
   try {
-    const user: UserProfile = req.body;
+
+    const user: UserProfile =
+      req.body;
 
     // BUILD VECTOR
 
     user.vector = [
 
       user.experience,
+
       user.skills.length,
-      user.permanent_contract? 1: 0,
+
+      user.permanent_contract
+        ? 1
+        : 0,
     ];
 
     // GET JOBS
 
-    const jobs = await JobsService.getJobs();
+    const jobs =
+      await JobsService.getJobs();
 
     // RECOMMEND
 
-    const recommendations = RecommendationService.recommend(user, jobs);
+    const recommendations = await RecommendationService.recommend(user, jobs);
 
     return res.json(
       recommendations.slice(0, 20)
