@@ -28,7 +28,6 @@ app.use(cors({
   credentials: true
 }));
 
-
 ///////////////////////////////////////////////////////////////
 
 // To protect a route, you have to pass the AuthCheck func in parameter
