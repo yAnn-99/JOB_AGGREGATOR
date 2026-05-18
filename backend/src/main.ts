@@ -13,7 +13,10 @@ import { client } from './middleware/InsertDB.ts';
 import jobsroutes from "./routes/jobs.routes.ts";
 import userrouter from './routes/UserManagement.ts';
 import {rateLimit} from 'express-rate-limit';
-
+import experienceRoutes from "./routes/experiences.routes.ts";
+import skillsRoutes from "./routes/skills.routes.ts";
+import favoritesRoutes from "./routes/favorites.routes.ts";
+import applicationsRoutes from "./routes/applications.routes.ts";
 import session from 'express-session';
 import * as lusca from 'lusca';
 
@@ -28,11 +31,16 @@ var limiter = rateLimit({
     max: 40, // max >= 40 requests per windowMs
 })
 
+app.set('trust proxy', 1);
 app.use(session({
   secret: secret,
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false }
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+    sameSite: 'lax'
+  }
 }));
 
 app.use(cookieParser());
@@ -44,6 +52,11 @@ app.use(cors({
   credentials: true
 }));
 app.use("/api/jobs", jobsroutes);
+app.use("/api/experience", experienceRoutes);
+app.use("/api/skills", skillsRoutes);
+app.use("/api/favorites", favoritesRoutes);
+app.use("/api/applications", applicationsRoutes);
+
 
 ///////////////////////////////////////////////////////////////
 
