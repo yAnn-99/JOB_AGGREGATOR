@@ -1,10 +1,8 @@
 import dotenv from 'dotenv';
 dotenv.config();
-import express, { response } from "express";
+import express from 'express';
 import type { Request, Response } from 'express';
 import cookieParser from 'cookie-parser';
-import https from "https";
-import fs from "fs";
 import cors from 'cors';
 import { MakeToken } from './middleware/MakeJwtToken.ts';
 import { AuthCheck } from './middleware/CheckAuth.ts';
@@ -12,34 +10,49 @@ import bcrypt from 'bcryptjs';
 import { AdminCheck } from './middleware/CheckAuth.ts';
 import { Insert_User_DB } from './middleware/InsertDB.ts';
 import { client } from './middleware/InsertDB.ts';
+import jobsroutes from "./routes/jobs.routes.ts";
+import userrouter from './routes/UserManagement.ts';
+import {rateLimit} from 'express-rate-limit';
 
-
-
+import session from 'express-session';
+import * as lusca from 'lusca';
 // const Token = process.env.TOKEN
 // console.log(Token)
 
 const app = express();
 const port = 3000;
+
+const secret : string = process.env.SECRET!;
+
+var limiter = rateLimit({
+    windowMs: 1 * 60 * 1000, // 1 minute
+    max: 40, // max >= 40 requests per windowMs
+})
+
+app.use(session({
+  secret: secret,
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}));
+
 app.use(cookieParser());
 app.use(express.json());
-
+app.use(limiter);
+app.use(lusca.csrf({allowlist: ['/login', '/register', '/login/admin']}))
 app.use(cors({
   origin: 'http://localhost:8080',
   credentials: true
 }));
+app.use("/api/jobs", jobsroutes);
 
 ///////////////////////////////////////////////////////////////
 
 // To protect a route, you have to pass the AuthCheck func in parameter
 
-app.get('/user', AuthCheck, (req: Request, res: Response) => {
-  res.json({ message: 'Hello from protected route' });
-});
-
-app.post('/test/admin', AdminCheck, (req: Request, res: Response) => {
-  res.json({ message: 'you are on the admin page' })
-})
-
+// app.get('/user', AdminCheck, (req: Request, res: Response) => {
+//   res.json({ message: 'Hello from protected route' });
+// });
 
 
 
@@ -50,7 +63,8 @@ app.post('/register', async (req: Request, res: Response) => {
   const NewUser = {
     email: req.body.email,
     firstname: req.body.firstname,
-    lastname: req.body.lastname
+    lastname: req.body.lastname,
+    blocked: false
   }
 
   const token = MakeToken(NewUser);
@@ -63,10 +77,12 @@ app.post('/register', async (req: Request, res: Response) => {
       maxAge: 3600000,
       sameSite: 'lax'
     });
-    res.status(201).json({ message: 'User added' });
+
+    return res.status(201).json({ message: 'User added' });
   } else {
-    res.json({ message: 'user already existing' })
+    return res.json({ message: 'user already existing' })
   }
+
 
 });
 
@@ -77,6 +93,14 @@ app.post('/login', async (req: Request, res: Response) => { //need to take user 
 
   const result = await client.query(`SELECT * FROM "user" WHERE "email" = $1`, [email]);
   const user = result.rows[0];
+
+  if (!user) {
+    return res.status(401).json({ message: " user does not exist" });
+  }
+
+  if (user.blocked == true) {
+    return res.status(401).json({ message: 'You have been blocked, get lost' })
+  }
 
   if (user && await bcrypt.compare(password, user.password)) {
 
@@ -95,9 +119,9 @@ app.post('/login', async (req: Request, res: Response) => { //need to take user 
 app.post('/login/admin', async (req: Request, res: Response) => {
   const { email, password } = req.body;
   const TrueEmail = process.env.ADMIN_USERNAME;
-  const TruePassword = await bcrypt.hash(process.env.ADMIN_PASSWORD!, 10);
+  const TruePassword = process.env.ADMIN_PASSWORD
 
-  if (email == TrueEmail && await bcrypt.compare(password, TruePassword)) {
+  if (email == TrueEmail && password == TruePassword) {
     const token = MakeToken({ email: email });
 
     res.cookie("AuthAdmin", token, {
@@ -107,36 +131,17 @@ app.post('/login/admin', async (req: Request, res: Response) => {
     });
     return res.status(200).json({ message: "you're in soldier" })
   } else {
-    res.status(401).json({ message: 'nope' })
+    return res.status(401).json({ message: 'nope' })
   }
 
 })
 
 
-app.post('/test/py', (req: Request, res: Response) => {
-  const userData = req.body;
+app.use('/user', userrouter);
 
-  console.log("Data received from Python daemon:", userData);
-
-  if (!userData) {
-    return res.status(400).json({ message: "No user data received" });
-  }
-
-  res.status(200).json({ message: "Data received successfully" });
-}
-)
-
-const sslOptions = {
-  key: fs.readFileSync('/usr/src/app/certs/key.pem'),
-  cert: fs.readFileSync("/usr/src/app/certs/cert.pem")
-};
-
-// app.listen(port, () => {
-//   console.log(`Server running at http://localhost:${port}`);
-// });
-
-https.createServer(sslOptions, app).listen(port, () => {
-  console.log(`HTTPS Server running at https://localhost:${port}`);
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
 });
+
 
 

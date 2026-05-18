@@ -6,12 +6,12 @@ DROP TABLE IF EXISTS "user";
 /* USER */
 
 CREATE TABLE "user" (
- "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY 
- "email" VARCHAR(100) NOT NULL UNIQUE 
- "password" VARCHAR(255) NOT NULL 
- "lastname" VARCHAR(100) NOT NULL 
- "firstname" VARCHAR(100) NOT NULL 
- "created_at" TIMESTAMP DEFAULT NOW()
+  "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  "email" varchar(100) NOT NULL UNIQUE,
+  "password" varchar(100) NOT NULL,
+  "lastname" varchar(100) NOT NULL,
+  "firstname" varchar(100) NOT NULL,
+  "blocked" BOOLEAN NOT NULL
 );
 
 /* EXPERIENCE */

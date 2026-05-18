@@ -4,8 +4,8 @@ WORKDIR /usr/share/app
 
 COPY package*.json ./
 
-RUN npm ci
+RUN npm install
 
 COPY . . 
 
-CMD ["node" , "src/main.ts"]
+CMD ["npx", "tsx", "src/main.ts"]
