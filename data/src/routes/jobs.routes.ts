@@ -1,7 +1,7 @@
 import express from "express";
-import { JobsService } from "../services/jobs.service.js";
-import { RecommendationService } from "../services/recommendation.service.js";
-import type {UserProfile} from "../types/recommendation.types.js";
+import { JobsService } from "../services/jobs.service.ts";
+import { RecommendationService } from "../services/recommendation.service.ts";
+import type {UserProfile} from "../types/recommendation.types.ts";
 
 const router = express.Router();
 

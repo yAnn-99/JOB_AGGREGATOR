@@ -7,7 +7,10 @@
     "rootDir": "src",
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true, 
+    // "moduleResolution": "bundler" // Usually required for this flag to work
   },
   "include": ["src"]
 }

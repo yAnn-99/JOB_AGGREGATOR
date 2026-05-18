@@ -1,5 +1,5 @@
 import { cosineSimilarity }
-from "../algorithms/similarity.algorithm.js";
+from "../algorithms/similarity.algorithm.ts";
 
 import type {
   JobVector

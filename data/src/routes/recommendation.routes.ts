@@ -1,6 +1,6 @@
 import express from "express";
-import { JobsService } from "../services/jobs.service.js";
-import { RecommendationService } from "../services/recommendation.service.js";
+import { JobsService } from "../services/jobs.service.ts";
+import { RecommendationService } from "../services/recommendation.service.ts";
 
 import type {
   UserProfile

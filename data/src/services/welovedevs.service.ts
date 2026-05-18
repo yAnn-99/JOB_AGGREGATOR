@@ -1,4 +1,4 @@
-import { env } from "../config/env.js";
+import { env } from "../config/env.ts";
 
 const headers = {
   "x-api-key": env.apiKey,

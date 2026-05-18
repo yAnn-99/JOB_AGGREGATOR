@@ -1,8 +1,8 @@
-import { WeLoveDevsService } from "./welovedevs.service.js";
-import { CacheService } from "./cache.service.js";
+import { WeLoveDevsService } from "./welovedevs.service.ts";
+import { CacheService } from "./cache.service.ts";
 
-import { normalizeSkills } from "../utils/normalizeSkills.js";
-import type { JobVector} from "../types/jobs.types.js";
+import { normalizeSkills } from "../utils/normalizeSkills.ts";
+import type { JobVector} from "../types/jobs.types.ts";
 
 export class JobsService {
   static async getJobs(): Promise<JobVector[]> {
