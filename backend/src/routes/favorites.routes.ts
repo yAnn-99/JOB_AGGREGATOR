@@ -1,10 +1,14 @@
 import express from "express";
-
-import { client }
-from "../middleware/InsertDB.ts";
+import { client } from "../middleware/InsertDB.ts";
+import { rateLimit } from "express-rate-limit";
 
 const router = express.Router();
+var limiter = rateLimit({
+    windowMs: 1 * 60 * 1000, // 1 minute
+    max: 40, // max >= 40 requests per windowMs
+})
 
+router.use(limiter);
 /* ADD FAVORITE */
 
 router.post("/", async (req, res) => {
