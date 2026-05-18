@@ -21,11 +21,12 @@ services :
     build:
       context : ./data
       dockerfile : ./Dockerfile
+    ports:
+      - "4000:4000"
     env_file:
       - .env
     environment : 
-      - URL:${URL}
-    restart: always
+      - URL=${URL}
     depends_on:
       - db
 

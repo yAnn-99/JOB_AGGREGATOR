@@ -1,13 +1,13 @@
 import { cosineSimilarity }
-from "../algorithms/similarity.algorithm.js";
+from "../algorithms/similarity.algorithm.ts";
 
 import type {
   JobVector
-} from "../types/jobs.types.js";
+} from "../types/jobs.types.ts";
 
 import type {
   UserProfile
-} from "../types/recommendation.types.js";
+} from "../types/recommendation.types.ts";
 
 export class RecommendationService {
 

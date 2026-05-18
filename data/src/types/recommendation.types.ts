@@ -11,4 +11,6 @@ export interface UserProfile {
   experience: number;
 
   vector?: number[];
+
+  remote: boolean;
 }

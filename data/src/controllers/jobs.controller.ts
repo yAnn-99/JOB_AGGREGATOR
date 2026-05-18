@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
-import { JobsService } from "../services/jobs.service.js";
-import { RecommendationService } from "../services/recommendation.service.js";
+import { JobsService } from "../services/jobs.service.ts";
+import { RecommendationService } from "../services/recommendation.service.ts";
+import { UserProfile } from "../types/recommendation.types.ts";
 
 export class JobsController {
   static async getJobs(
@@ -47,10 +48,24 @@ export class JobsController {
     try {
       const jobs = await JobsService.getJobs();
 
-      const user = {
-        skills: ["React", "TypeScript", "Node.js"],
-        remote: true,
-      };
+      const user: UserProfile = {
+        id: req.body.id,
+        localization: req.body.localization,
+        permanent_contract: req.body.permanent_contract,
+        experience: req.body.experience,
+        skills: req.body.skills ?? [],
+        remote: req.body.remote ?? false,
+        vector: []
+      }
+
+      // BUILD VECTOR
+
+      user.vector = [
+
+        user.experience,
+        user.skills.length,
+        user.permanent_contract ? 1 : 0,
+      ];
 
       const recommendations =
         RecommendationService.recommend(

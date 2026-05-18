@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
-import recommendationRoutes from "./routes/recommendation.routes.js";
-import jobsRoutes from "./routes/jobs.routes.js";
+import recommendationRoutes from "./routes/recommendation.routes.ts";
+import jobsRoutes from "./routes/jobs.routes.ts";
 
 const app = express();
 
