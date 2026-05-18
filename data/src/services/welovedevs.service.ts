@@ -4,6 +4,7 @@ const headers = {
   "x-api-key": env.apiKey,
 };
 
+
 export class WeLoveDevsService {
   static async fetchJobs() {
     const response = await fetch(

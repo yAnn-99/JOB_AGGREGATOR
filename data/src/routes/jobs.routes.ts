@@ -1,14 +1,22 @@
 import express from "express";
 import { JobsService } from "../services/jobs.service.ts";
 import { RecommendationService } from "../services/recommendation.service.ts";
-import type {UserProfile} from "../types/recommendation.types.ts";
+import type { UserProfile } from "../types/recommendation.types.ts";
 
 const router = express.Router();
 
 router.post("/", async (req, res) => {
 
   try {
-    const user: UserProfile = req.body;
+    const user : UserProfile = {
+      id: req.body.id,
+      localization: req.body.localization,
+      permanent_contract: req.body.permanent_contract,
+      experience: req.body.experience,
+      skills: req.body.skills ?? [],
+      remote: req.body.remote ?? false,
+      vector : []
+    }
 
     // BUILD VECTOR
 
@@ -16,7 +24,7 @@ router.post("/", async (req, res) => {
 
       user.experience,
       user.skills.length,
-      user.permanent_contract? 1: 0,
+      user.permanent_contract ? 1 : 0,
     ];
 
     // GET JOBS
