@@ -13,7 +13,7 @@ import { client } from './middleware/InsertDB.ts';
 import jobsroutes from "./routes/jobs.routes.ts";
 import userrouter from './routes/UserManagement.ts';
 import {rateLimit} from 'express-rate-limit';
-import * as lusca from 'lusca';
+import lusca from 'lusca';
 // const Token = process.env.TOKEN
 // console.log(Token)
 
@@ -21,7 +21,6 @@ const app = express();
 const port = 3000;
 app.use(cookieParser());
 app.use(express.json());
-app.use(lusca.csrf())
 
 app.use(cors({
   origin: 'http://localhost:8080',
