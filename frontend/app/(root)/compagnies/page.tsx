@@ -22,8 +22,9 @@ const Page = () => {
       try {
         const reponse = await fetch(url);
         const resultat: JobsResponse = await reponse.json();
-        setJobs(resultat.values);
-        setFilteredJobs(resultat.values);
+        const data = resultat.values ?? [];
+        setJobs(data);
+        setFilteredJobs(data);
       } catch (error) {
         console.error(error);
       }
@@ -75,7 +76,7 @@ const Page = () => {
         </select>
       </div>
 
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,250px))] gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4">
         {filteredJobs.map((element, index) => (
           <Card key={index} job={element} />
         ))}

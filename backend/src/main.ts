@@ -16,8 +16,7 @@ import {rateLimit} from 'express-rate-limit';
 
 import session from 'express-session';
 import * as lusca from 'lusca';
-// const Token = process.env.TOKEN
-// console.log(Token)
+
 
 const app = express();
 const port = 3000;
@@ -47,12 +46,6 @@ app.use(cors({
 app.use("/api/jobs", jobsroutes);
 
 ///////////////////////////////////////////////////////////////
-
-// To protect a route, you have to pass the AuthCheck func in parameter
-
-// app.get('/user', AdminCheck, (req: Request, res: Response) => {
-//   res.json({ message: 'Hello from protected route' });
-// });
 
 
 
