@@ -46,7 +46,7 @@ const Page = () => {
               src={picture}
               width={800}
               height={800}
-              alt="Job"
+              alt="Image of a two men agreeing and shaking hands"
               className="relative bg-[#1976d2] p-4 rounded-md lg:visible md:invisible sm:invisible"
             />
 

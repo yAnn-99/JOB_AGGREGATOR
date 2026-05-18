@@ -1,4 +1,6 @@
 .env
+.venv
+venv/
 node_modules/
 id_mirror
 id_mirror_pub
