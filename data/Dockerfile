@@ -1,15 +1,15 @@
-FROM python
+FROM node:22-alpine
 
 WORKDIR /app
 
-RUN  python -m venv venv
+COPY package*.json ./
 
-ENV PATH="/venv/bin:$PATH"
-
-COPY requirements.txt .
-
-RUN pip install -r requirements.txt
+RUN npm install
 
 COPY . .
 
-CMD ["python" , "hello.py"]
+RUN npm run build
+
+EXPOSE 4000
+
+CMD ["npm", "run", "start"]
