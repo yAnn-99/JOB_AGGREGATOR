@@ -1,16 +1,17 @@
 // import { env } from "../config/env";
 
 const apiKey : string = process.env.TOKEN || "";
+
 const headers = {
-  'x-api-key': apiKey
+  "x-api-key": apiKey
 };
 
 export class WeLoveDevsService {
   /*
     GET ALL JOBS
   */
-  static async getAllJobs(page = 0, size = 10, q = "") {    
-    const url = new URL(`${process.env.baseUrl}/v1`)
+  static async getAllJobs(page = 0, size = 10, q = "") {
+    const url = new URL(`${process.env.baseUrl}/v1`);
 
     url.searchParams.append("page", page.toString());
     url.searchParams.append("size", size.toString());

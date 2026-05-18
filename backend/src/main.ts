@@ -45,6 +45,7 @@ app.use(cors({
   credentials: true
 }));
 app.use("/api/jobs", jobsroutes);
+
 ///////////////////////////////////////////////////////////////
 
 // To protect a route, you have to pass the AuthCheck func in parameter
@@ -103,7 +104,7 @@ app.post('/login', async (req: Request, res: Response) => { //need to take user 
 
   if (user && await bcrypt.compare(password, user.password)) {
 
-    const token = MakeToken({ email: user.email });
+    const token = MakeToken({ email: user.email }); // test fjopisdjfsopifjpiosdjfpiz
     res.cookie("AuthLogin", token, {
       httpOnly: true,
       maxAge: 3600000,
