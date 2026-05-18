@@ -13,12 +13,9 @@ import { client } from './middleware/InsertDB.ts';
 import jobsroutes from "./routes/jobs.routes.ts";
 import userrouter from './routes/UserManagement.ts';
 import {rateLimit} from 'express-rate-limit';
-<<<<<<< HEAD
-import lusca from 'lusca';
-=======
+
 import session from 'express-session';
 import * as lusca from 'lusca';
->>>>>>> 5fa182257874d620bada51bf2d8e51e95b5cb490
 // const Token = process.env.TOKEN
 // console.log(Token)
 
